@@ -45,11 +45,14 @@ contract CCCMintContract is ERC721A, Ownable {
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
-    uint256 public cost = 0.01 ether;
-    uint256 public maxSupply = 7750;
+    uint256 public costPublic = 0.11 ether;
+    uint256 public costWL = 0.09 ether;
+    uint256 public costOG = 0.08 ether;
+    uint256 public maxSupply = 7700;
     uint256 public maxMintAmountPerTx = 5;
     uint256 public nftPerAddressLimit = 5;
     uint256 public nftPerAddressLimitPreSale = 3;
+    uint256 public maxSupplyForDevs = 120;
 
     bool public paused = true;
     bool public revealed = false;
@@ -80,9 +83,8 @@ contract CCCMintContract is ERC721A, Ownable {
 
     /// @dev Runs before every mint for Owner
     modifier mintComplianceOwner(uint256 _mintAmount) {
-        // TODO:  add limit mint for owner
         require(
-            totalSupply() + _mintAmount <= maxSupply,
+            totalSupply() + _mintAmount <= maxSupplyForDevs,
             "Max supply exceeded!"
         );
         _;
@@ -120,11 +122,15 @@ contract CCCMintContract is ERC721A, Ownable {
     {
         require(!paused, "The contract is paused!");
         require(presale, "Not in pre sale");
-        require(verify(rootOg, proof), "Address is not og");
         require(
-            msg.value >= ((cost * 80) / 100) * _mintAmount,
-            "insufficient funds"
+            MerkleProof.verify(
+                proof,
+                rootOg,
+                keccak256(abi.encodePacked(msg.sender))
+            ),
+            "Address is not og"
         );
+        require(msg.value >= costOG * _mintAmount, "insufficient funds");
         require(
             addressMintedBalance[msg.sender] + _mintAmount <=
                 nftPerAddressLimitPreSale,
@@ -145,11 +151,15 @@ contract CCCMintContract is ERC721A, Ownable {
     {
         require(!paused, "The contract is paused!");
         require(presale, "Not in pre sale");
-        require(verify(rootWl, proof), "Address is not whitelisted");
         require(
-            msg.value >= ((cost * 90) / 100) * _mintAmount,
-            "insufficient funds"
+            MerkleProof.verify(
+                proof,
+                rootWl,
+                keccak256(abi.encodePacked(msg.sender))
+            ),
+            "Address is not whitelisted"
         );
+        require(msg.value >= costWL * _mintAmount, "insufficient funds");
         require(
             addressMintedBalance[msg.sender] + _mintAmount <=
                 nftPerAddressLimitPreSale,
@@ -319,7 +329,11 @@ contract CCCMintContract is ERC721A, Ownable {
         view
         returns (bool)
     {
-        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
-        return MerkleProof.verify(proof, root, leaf);
+        return
+            MerkleProof.verify(
+                proof,
+                root,
+                keccak256(abi.encodePacked(msg.sender))
+            );
     }
 }
