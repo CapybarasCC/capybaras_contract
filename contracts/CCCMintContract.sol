@@ -3,19 +3,19 @@
 /**
 Capybaras Country Club
 
-            ,▄▄▄▌██████████████████████████▌▌▒▄;
+             ▄▄▄▌██████████████████████████▌▌█▄ 
       ▄██████████████████████████████████████████████▌
-   ▄██████▌▀░                                  └Å▀███████
-  █████         ,,                        ,,         ▀████▄
- ████░         ███████▌              ▄███████▒         ████
- ███~           █████████          ▓████████▀           ███▌
-▐███               ▀██████w       ███████└              ▐███
+   ▄██████▌                                      ▀███████
+  █████                                              ▀████▄
+ ████          ███████▌              ▄███████▒         ████
+ ███            █████████          ▓████████▀           ███▌
+▐███               ▀██████        ███████               ▐███
  ██▌                 ▀████▌  ▄█   █████                  ███
  ███                         ██▌                         ██▌
  ███                         ██▌                        ███▀
  ▓██▌                       ▐███                        ███
   ███                       ║███                       ███▌
-  ╙███                      ║███                      ,███
+  ╙███                      ║███                       ███
    ███▌                     ▐███                      ███
     ███▌                    ║███                     ███
      ████                   ▐███                   ▄███
@@ -23,7 +23,7 @@ Capybaras Country Club
         ████▄                ██▌                ████▀
          ▐████▌              ██▌             ▄█████
            ▀█████▄           ██           ,██████
-             "██████▌         └        ▄██████▀
+             "██████▌                  ▄██████▀
                 ╙████████▄        ,▄███████▀
                     ╜██████████████████▀                                                 
 */
@@ -249,8 +249,20 @@ contract CCCMintContract is ERC721A, Ownable {
 
     /// @notice Updates the mint cost
     /// @param _cost new cost of minting
-    function setCost(uint256 _cost) public onlyOwner {
-        cost = _cost;
+    function setCostPublic(uint256 _cost) public onlyOwner {
+        costPublic = _cost;
+    }
+
+    /// @notice Updates the mint cost
+    /// @param _cost new cost of minting
+    function setCostWL(uint256 _cost) public onlyOwner {
+        costWL = _cost;
+    }
+
+    /// @notice Updates the mint cost
+    /// @param _cost new cost of minting
+    function setCostOG(uint256 _cost) public onlyOwner {
+        costOG = _cost;
     }
 
     /// @notice Sets the maximum amount of tokens to be minted per transaction
