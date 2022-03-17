@@ -13,3 +13,9 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+
+### To verify the contract
+
+1. Fill up the .envs (use the .env.example file as a template)
+2. Compile the contract
+3. run npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS (replace mainnet with the network you want to verify)

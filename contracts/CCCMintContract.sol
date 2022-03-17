@@ -101,7 +101,7 @@ contract CCCMintContract is ERC721A, Ownable {
     {
         require(!paused, "The contract is paused!");
         require(!presale, "Not valid user for pre sale");
-        require(msg.value >= cost * _mintAmount, "Insufficient funds!");
+        require(msg.value >= costPublic * _mintAmount, "Insufficient funds!");
         require(
             addressMintedBalance[msg.sender] + _mintAmount <=
                 nftPerAddressLimit,
