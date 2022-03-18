@@ -68,6 +68,7 @@ contract CCCMintContract is ERC721A, Ownable {
 
     /// @dev Runs before every mint
     modifier mintCompliance(uint256 _mintAmount) {
+        require(tx.origin == msg.sender, "The caller is another contract");
         require(
             _mintAmount > 0 && _mintAmount <= maxMintAmountPerTx,
             "Invalid mint amount!"
