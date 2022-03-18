@@ -45,9 +45,9 @@ contract CCCMintContract is ERC721A, Ownable {
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
-    uint256 public costPublic = 0.11 ether;
-    uint256 public costWL = 0.09 ether;
-    uint256 public costOG = 0.08 ether;
+    uint256 public costPublic = 0.06 ether;
+    uint256 public costWL = 0.04 ether;
+    uint256 public costOG = 0.03 ether;
     uint256 public maxSupply = 7700;
     uint256 public maxMintAmountPerTx = 5;
     uint256 public nftPerAddressLimit = 5;
@@ -98,7 +98,7 @@ contract CCCMintContract is ERC721A, Ownable {
     {
         require(!paused, "The contract is paused!");
         require(!presale, "Not valid user for pre sale");
-        require(msg.value >= cost * _mintAmount, "Insufficient funds!");
+        require(msg.value >= costPublic * _mintAmount, "Insufficient funds!");
         require(
             addressMintedBalance[msg.sender] + _mintAmount <=
                 nftPerAddressLimit,
