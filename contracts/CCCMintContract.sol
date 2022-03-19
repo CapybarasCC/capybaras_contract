@@ -89,11 +89,11 @@ contract CCCMintContract is ERC721A, Ownable {
         _;
     }
 
-    /// @notice Mints for public sale at full price
+    /// @notice Mints for public sale at full price. WL and OG can go up to 5 NFT (3 in pre-sale and 2 in public sale).
     /// @param _mintAmount is to number of NFTs to mint
     /// @dev Mints NFTs for public sale when presale is false at a discount
     function mintPublicSale(uint256 _mintAmount)
-        public
+        external
         payable
         mintCompliance(_mintAmount)
     {
@@ -115,7 +115,7 @@ contract CCCMintContract is ERC721A, Ownable {
     /// @param proof is an array of byte32 hashes
     /// @dev Mints NFTs for the private sale when presale is true
     function mintOG(uint256 _mintAmount, bytes32[] memory proof)
-        public
+        external
         payable
         mintCompliance(_mintAmount)
     {
@@ -144,7 +144,7 @@ contract CCCMintContract is ERC721A, Ownable {
     /// @param proof is an array of byte32 hashes
     /// @dev Mints NFTs for the private sale when presale is true
     function mintWL(uint256 _mintAmount, bytes32[] memory proof)
-        public
+        external
         payable
         mintCompliance(_mintAmount)
     {
@@ -173,40 +173,11 @@ contract CCCMintContract is ERC721A, Ownable {
     /// @param _receiver wallet of the recipient
     /// @dev Mints NFTs for the private sale when presale is true
     function mintForAddress(uint256 _mintAmount, address _receiver)
-        public
+        external
         mintComplianceOwner(_mintAmount)
         onlyOwner
     {
         _safeMint(_receiver, _mintAmount);
-    }
-
-    /// @dev Queries the tokens of the owner
-    /// @param _owner address of the owner
-    function walletOfOwner(address _owner)
-        public
-        view
-        returns (uint256[] memory)
-    {
-        uint256 ownerTokenCount = balanceOf(_owner);
-        uint256[] memory ownedTokenIds = new uint256[](ownerTokenCount);
-        uint256 currentTokenId = 1;
-        uint256 ownedTokenIndex = 0;
-
-        while (
-            ownedTokenIndex < ownerTokenCount && currentTokenId <= maxSupply
-        ) {
-            address currentTokenOwner = ownerOf(currentTokenId);
-
-            if (currentTokenOwner == _owner) {
-                ownedTokenIds[ownedTokenIndex] = currentTokenId;
-
-                ownedTokenIndex++;
-            }
-
-            currentTokenId++;
-        }
-
-        return ownedTokenIds;
     }
 
     /// @notice Queries contract tokens by id
