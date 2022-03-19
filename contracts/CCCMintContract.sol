@@ -66,6 +66,7 @@ contract CCCMintContract is ERC721A, Ownable {
         setHiddenMetadataUri("ipfs://TO_UPDATE/hidden_metadata.json");
     }
 
+    /// @notice Do not pass supply and max NFT per transaction. Limit on the pre-sale is the total supply
     /// @dev Runs before every mint
     modifier mintCompliance(uint256 _mintAmount) {
         require(tx.origin == msg.sender, "The caller is another contract");
@@ -80,7 +81,8 @@ contract CCCMintContract is ERC721A, Ownable {
         _;
     }
 
-    /// @dev Runs before every mint for Owner
+    /// @notice Devs mints before everyone else (before the pre-sale starts)
+    /// @dev Runs before the pre-sale starts
     modifier mintComplianceOwner(uint256 _mintAmount) {
         require(
             totalSupply() + _mintAmount <= maxSupplyForDevs,
@@ -302,7 +304,7 @@ contract CCCMintContract is ERC721A, Ownable {
         return uriPrefix;
     }
 
-    /// @notice uses MerkleRoot to verify if the hash is valid
+    /// @notice uses MerkleRoot to verify if the hash is valid. (This function is used externally only)
     /// @param root can be rootOg or rootWl
     /// @param proof is the Merkle proof in the form of a bytes32 array
     /// @dev Returns a boolean
