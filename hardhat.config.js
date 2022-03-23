@@ -21,11 +21,13 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
-  settings: {
-    optimizer: {
-      enabled: true,
-      runs: 1000,
+  solidity: {
+    version: "0.8.4",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
     },
   },
   networks: {
@@ -35,6 +37,11 @@ module.exports = {
     goerli: {
       chainId: 5,
       url: process.env.NETWORK_ENDPOINT_GOERLI,
+      accounts: [process.env.ACCOUNT_PK],
+    },
+    rinkeby: {
+      chainId: 4,
+      url: process.env.NETWORK_ENDPOINT_RINKEBY,
       accounts: [process.env.ACCOUNT_PK],
     },
     // TODO: uncomment when shipping to mainnet
@@ -47,6 +54,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       goerli: process.env.ETHERSCAN_API_KEY,
+      rinkeby: process.env.ETHERSCAN_API_KEY,
       // TODO: uncomment when shipping to mainnet
       // mainnet: process.env.ETHERSCAN_API_KEY,
     },

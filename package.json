@@ -4,7 +4,8 @@
     "compile": "hardhat compile",
     "localNode": "hardhat node",
     "dev:deploy": "hardhat run scripts/deploy.js --network localhost",
-    "dev:deploy:goerli": "hardhat run scripts/deploy.js --network goerli"
+    "dev:deploy:goerli": "hardhat run scripts/deploy.js --network goerli",
+    "dev:deploy:rinkeby": "hardhat run scripts/deploy.js --network rinkeby"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
