@@ -63,7 +63,9 @@ contract CCCMintContract is ERC721A, Ownable {
     bytes32 rootOg;
 
     constructor() ERC721A("Capybara", "CCC") {
-        setHiddenMetadataUri("ipfs://QmVJDDmq3KBnyu4R1387Hs6dLDFHVH6UAQS3nFh7w1zAVC/hidden.json");
+        setHiddenMetadataUri(
+            "ipfs://QmcNqKmNjy5wo3tCRT3apy7BzEo1SyGsWru55fuDZPckd6/hidden.json"
+        );
     }
 
     /// @notice Do not pass supply and max NFT per transaction. Limit on the pre-sale is the total supply
