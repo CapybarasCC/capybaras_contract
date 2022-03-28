@@ -64,7 +64,7 @@ contract CCCMintContract is ERC721A, Ownable {
 
     constructor() ERC721A("Capybara", "CCC") {
         setHiddenMetadataUri(
-            "ipfs://QmcNqKmNjy5wo3tCRT3apy7BzEo1SyGsWru55fuDZPckd6/hidden.json"
+            "ipfs://QmVJDDmq3KBnyu4R1387Hs6dLDFHVH6UAQS3nFh7w1zAVC/hidden.json"
         );
     }
 
